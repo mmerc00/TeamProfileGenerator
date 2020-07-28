@@ -20,9 +20,9 @@ let teamArray = [];
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 //HELPER FUNCTIONS FOR THE ADD TEAM MEMBER =====
-function newTeamMember (reply){
+function newTeamMember(reply) {
   return inquirer
-  .prompt ([
+  .prompt([
     {type: "confirm",
     message:"would you like to add a team member",
     name: "member",
@@ -31,12 +31,12 @@ function newTeamMember (reply){
     if(yes.member === true){
       promptQuestion();
     } else {
-renderFiles ();
+renderFiles();
     }
   })
-  .catch function (err) {
+  .catch(function(err) {
     console.log(err);
-  }
+    })
 }
 
 //function user prompt questions
@@ -80,9 +80,9 @@ function UserPrompt(response) {
         // name: "type",
           }])
         //.then gathers the information above
-          .then(function(managerReply){
+          .then(function (managerReply) {
               //making a new object
-            let newmanager = new manager (
+            let newmanager = new Manager(
              managerReply.name,
              managerRely.id,
              managerReply.email,
@@ -90,12 +90,13 @@ function UserPrompt(response) {
              //managerReply.type,
              //assigning employee id and adding it by input
             //pushing into an array
-            teamArray.push(newManager);
+            teamArray.push(newManager));
             //run new team member function (this confuses me)
              newTeamMember()
           })}
-      else (reply.role === "intern") {
-        inquirer.prompt([
+      else if (reply.role === "Intern") {
+        inquirer
+        .prompt([
         {
         type: "input",
         message: "what is you interns name?",
@@ -128,7 +129,7 @@ function UserPrompt(response) {
             //assigning employee id and adding it by input
             teamArray.push(newIntern);
             newTeamMember();
-                    });
+                    });}
 
     else if (reply.role === "Engineer") {
             inquirer.prompt([
@@ -153,8 +154,8 @@ function UserPrompt(response) {
         // message: "which type of team member would you like to add",
         // name: "type",
             }])
-    .then(function(engineerReply){
-        let newEngineer = new Engineer (
+    .then(function (engineerReply) {
+        let newEngineer = new Engineer(
         engineerReply.name,
         engineerReply.id,
         engineerReply.email,
@@ -166,9 +167,9 @@ function UserPrompt(response) {
     });
   
     })
-    .catch(function (err){
+    .catch(function (err) {
       console.log(err);
-    }}
+    })}
           
 //working on this
 //new team memeber function
