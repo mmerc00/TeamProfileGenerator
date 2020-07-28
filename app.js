@@ -12,13 +12,32 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const writeFileAsync = util.promisify(fs.writeFile);
 //empty team array
 let teamArray = [];
-let employeeId = 0;
+//let employeeId = 0;
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 //HELPER FUNCTIONS FOR THE ADD TEAM MEMBER =====
+function newTeamMember (reply){
+  return inquirer
+  .prompt ([
+    {type: "confirm",
+    message:"would you like to add a team member",
+    name: "member",
+  }])
+  .then(function(yes){
+    if(yes.member === true){
+      promptQuestion();
+    } else {
+renderFiles ();
+    }
+  })
+  .catch function (err) {
+    console.log(err);
+  }
+}
 
 //function user prompt questions
 //made a function instead of a const
@@ -36,7 +55,6 @@ function UserPrompt(response) {
     ])
     //await async
     //instead of await change order 
-    //add in catch error
     .then(function (reply) {
       if (reply.role === "Manager") {
      inquirer.prompt([
@@ -56,10 +74,10 @@ function UserPrompt(response) {
         type: "input",
         message: "what is your managers office number",
         name: "officeNumber",
-          } , {
-        type: "input",
-        message: "what type of team memeber would you like to add",
-        name: "type",
+        //   } , {
+        // type: "input",
+        // message: "what type of team memeber would you like to add",
+        // name: "type",
           }])
         //.then gathers the information above
           .then(function(managerReply){
@@ -69,18 +87,14 @@ function UserPrompt(response) {
              managerRely.id,
              managerReply.email,
              managerReply.officeNumber,
-             managerReply.type,
-             //employeeId
-             //empty employee id );
+             //managerReply.type,
              //assigning employee id and adding it by input
-           // employeeId = employeeId++;
             //pushing into an array
             teamArray.push(newManager);
             //run new team member function (this confuses me)
-             newTeamMember();
-            });
-
-    else if (reply.role === "intern") {
+             newTeamMember()
+          })}
+      else (reply.role === "intern") {
         inquirer.prompt([
         {
         type: "input",
@@ -98,27 +112,25 @@ function UserPrompt(response) {
         type: "input",
         message: "what is your interns education",
          name: "education",
-        }, {
-        type: "input",
-        message: "which type of team member would you like to add",
-        name: "type",
+        // }, {
+        // type: "input",
+        // message: "which type of team member would you like to add",
+        // name: "type",
          }])
             .then(function(internReply){
                let newInter = new Intern (
                 internReply.name,
                 internReply.email,
                 internReply.education,
-                internReply.type,
-                     //employeeId
-                     //empty employee id 
+                //internReply.type,
+               
             );
             //assigning employee id and adding it by input
-           // employeeId = employeeId++;
             teamArray.push(newIntern);
             newTeamMember();
                     });
 
-    else (reply.role === "Engineer") {
+    else if (reply.role === "Engineer") {
             inquirer.prompt([
         {
         type: "input",
@@ -137,51 +149,52 @@ function UserPrompt(response) {
         message: "what is your engineers Github username",
         name: "github",
         },{
-        type: "input",
-        message: "which type of team member would you like to add",
-        name: "type",
-                  }])
+        // type: "input",
+        // message: "which type of team member would you like to add",
+        // name: "type",
+            }])
     .then(function(engineerReply){
         let newEngineer = new Engineer (
         engineerReply.name,
         engineerReply.id,
         engineerReply.email,
         engineerReply.github,
-        engineerReply.type,
-        employeeId
-                     //empty employee id 
+        // engineerReply.type,
         );
-        //assigning employee id and adding it by input
-        // employeeId = employeeId++;
         teamArray.push(newEngineer);
         newTeamMember();
     });
-    };}
+  
+    })
+    .catch(function (err){
+      console.log(err);
+    }}
           
-          
+//working on this
 //new team memeber function
 // function newTeamMember(reply) {
-//     return inquirer
-//       .prompt([
-//         {
-//           type: “confirm”,
-//           message: “Do you want to add another team member?“,
-//           name: “continue”,
-//         },
-//       ])
-//       .then(function (userConfirm) {
-//         if (userConfirm.continue === true) {
-//           userPrompt();
-//           //render HTML function here
-//         }
-//       })
-//       .catch(function (err) {
-//         console.log(err);
-//       });
-//   }
 
-promptUser();
+// generate html here
 
+function init (){
+  promptQuesitons();
+}
+init();
+
+async function renderFiles(){
+  try {
+    const userAnswers = await render(teamArray);
+    writeFileAsync(outpath, userAnswers)
+    .catch (err);
+  }
+}
+
+
+// function generateHtml (){
+//   render ()
+// }
+//promptUser();
+      
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
