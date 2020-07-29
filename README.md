@@ -4,7 +4,8 @@ In this generator a user is presented with questions regarding their team. Upon 
 
 Prerequisites N/A
 
-#Built With
+# Built With
+
 VS CODE
 Javascript
 Node Js
@@ -12,12 +13,14 @@ Chrome
 HTML
 Github
 
-##Authors
+## Authors
+
 Melissa Mercado
 
 License N/A
 
-##Acknowledgements
+## Acknowledgements
+
 *Ben Wright
 *Justin Pinero
 *Ben Benson (Tutor)
