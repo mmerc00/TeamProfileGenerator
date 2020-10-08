@@ -8,26 +8,14 @@ Prerequisites N/A
 
 # Built With
 
-VS CODE
-Javascript
-Node Js
-Chrome
-HTML
-Github
+- VS CODE
+- Javascript
+- Node Js
+- Chrome
+- HTML
+- Github
 
 ## Authors
 
 Melissa Mercado
 
-License N/A
-
-## Acknowledgements
-
-- Ben Wright
-- Justin Pinero
-- Ben Benson (Tutor)
-- Cammryne Sullivan
-- James Rowe
-- Justin Ramirez
-- James Kim
-- Mike Haber
