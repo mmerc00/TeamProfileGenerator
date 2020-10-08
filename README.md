@@ -4,8 +4,6 @@
 
 In this generator a user is presented with questions regarding their team. Upon user input, a team profile is generated. The user has the options of adding more team members. The deployed html then shows the users input/
 
-Prerequisites N/A
-
 # Built With
 
 - VS CODE
